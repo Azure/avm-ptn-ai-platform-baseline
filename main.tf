@@ -1,14 +1,18 @@
 # TODO: Replace this dummy resource azurerm_resource_group.TODO with your module resource
-resource "azurerm_resource_group" "TODO" {
+resource "random_pet" "unique_name" {
+  length    = 2
+  separator = "-"
+}
+resource "azurerm_resource_group" "this" {
   location = var.location
-  name     = var.name # calling code must supply the name
+  name     = local.resource_group_name
   tags     = var.tags
 }
+
 
 # required AVM resources interfaces
 resource "azurerm_management_lock" "this" {
   count = var.lock != null ? 1 : 0
-
   lock_level = var.lock.kind
   name       = coalesce(var.lock.name, "lock-${var.lock.kind}")
   scope      = azurerm_MY_RESOURCE.this.id # TODO: Replace with your azurerm resource name
