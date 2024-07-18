@@ -1,7 +1,6 @@
 terraform {
-  required_version = "~> 1.5"
+  required_version = "~> 1.7"
   required_providers {
-    # TODO: Ensure all required providers are listed here and the version property includes a constraint on the maximum major version.
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 3.71"
@@ -12,3 +11,12 @@ terraform {
     }
   }
 }
+
+provider "azurerm" {
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false # This is to handle MCAPS or other policy driven resource creation.
+    }
+  }
+}
+
