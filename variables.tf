@@ -6,6 +6,7 @@ variable "address_space_size" {
 variable "address_space_start_ip" {
   type        = string
   description = "The address space that is used the virtual network"
+  default     = "10.0.0.0"
 }
 
 variable "location" {
@@ -19,10 +20,8 @@ variable "name" {
   description = "The name of the this resource."
 
   validation {
-    condition     = can(regex("TODO", var.name))
-    error_message = "The name must be TODO." # TODO remove the example below once complete:
-    #condition     = can(regex("^[a-z0-9]{5,50}$", var.name))
-    #error_message = "The name must be between 5 and 50 characters long and can only contain lowercase letters and numbers."
+    condition     = can(regex("^[a-z][a-z0-9]{4,14}$", var.name))
+    error_message = "The name must be between 5 and 5 chars long and can only contain lowercase letters and numbers." # TODO remove the example below once complete:
   }
 }
 
@@ -172,7 +171,7 @@ variable "private_endpoints" {
       name = optional(string, null)
     }), null)
     tags                                    = optional(map(string), null)
-    subnet_resource_id                      = string
+    subnet_resource_id                      = optional(string, null)
     private_dns_zone_group_name             = optional(string, "default")
     private_dns_zone_resource_ids           = optional(set(string), [])
     application_security_group_associations = optional(map(string), {})
@@ -245,9 +244,3 @@ DESCRIPTION
   nullable    = false
 }
 
-# tflint-ignore: terraform_unused_declarations
-variable "tags" {
-  type        = map(string)
-  default     = null
-  description = "(Optional) Tags of the resource."
-}

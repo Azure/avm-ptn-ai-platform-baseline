@@ -1,7 +1,7 @@
 module "virtual_network" {
   source              = "Azure/avm-res-network-virtualnetwork/azurerm"
   version             = "~> 0.2.0"
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = data.azurerm_resource_group.base.name
   subnets             = local.subnets
   address_space       = [local.virtual_network_address_space]
   location            = var.location

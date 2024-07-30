@@ -3,19 +3,19 @@ module "key_vault" {
   version = "~> 0.5"
 
   name                          = local.key_vault_name
-  location                      = azurerm_resource_group.this.location
-  resource_group_name           = azurerm_resource_group.this.name
+  location                      = data.azurerm_resource_group.base.location
+  resource_group_name           = data.azurerm_resource_group.base.name
   tenant_id                     = data.azurerm_client_config.current.tenant_id
   public_network_access_enabled = true
 
-  private_endpoints = {
-    primary = {
-      private_dns_zone_resource_ids = [module.private_dns_zone_key_vault.private_dnz_zone_output.id]
-      subnet_resource_id            = module.virtual_network.subnets["private_endpoints"].resource_id
-      subresource_name              = ["vault"]
-      tags                          = var.tags
-    }
-  }
+  # private_endpoints = {
+  #   primary = {
+  #     private_dns_zone_resource_ids = [module.private_dns_zone_key_vault.private_dnz_zone_output.id]
+  #     subnet_resource_id            = module.virtual_network.subnets["private_endpoints"].resource_id
+  #     subresource_name              = ["vault"]
+  #     tags                          = var.tags
+  #   }
+  # }
 
   role_assignments = {
     deployment_user_secrets = {

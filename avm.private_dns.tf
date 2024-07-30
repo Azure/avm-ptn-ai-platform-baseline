@@ -2,7 +2,7 @@ module "private_dns_zone_key_vault" {
   source  = "Azure/avm-res-network-privatednszone/azurerm"
   version = "~> 0.1"
 
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = data.azurerm_resource_group.base.name
   domain_name         = "privatelink.vaultcore.azure.net"
   virtual_network_links = {
     vnetlink1 = {
@@ -10,6 +10,4 @@ module "private_dns_zone_key_vault" {
       vnetid       = module.virtual_network.resource_id
     }
   }
-
-  //dns_zone_tags = var.tags
 }

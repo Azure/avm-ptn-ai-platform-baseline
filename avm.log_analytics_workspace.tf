@@ -3,7 +3,7 @@ module "log_analytics_workspace" {
   version = "~> 0.1"
 
   name                = local.log_analytics_workspace_name
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
+  location            = data.azurerm_resource_group.base.location
+  resource_group_name = data.azurerm_resource_group.base.name
   tags                = var.tags
 }

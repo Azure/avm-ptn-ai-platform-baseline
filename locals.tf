@@ -1,6 +1,11 @@
 # TODO: insert locals here.
 # Define resource names
 locals {
+  unique_postfix = random_pet.unique_name.id
+  resource_group_name          = length(var.resource_group_name) > 0 ? var.resource_group_name : "rg-pattern-${local.unique_postfix}"
+  log_analytics_workspace_name = "log-analytics-pattern-${local.unique_postfix}"
+  virtual_network_name         = "vnet-bridge-${local.unique_postfix}"
+  network_security_group_name  = "nsg-bridge-${local.unique_postfix}"
   key_vault_name               = "kv-bridge-${format("%.16s", local.unique_postfix)}"
   log_analytics_workspace_name = "log-analytics-pattern-${local.unique_postfix}"
   network_security_group_name  = "nsg-bridge-${local.unique_postfix}"
