@@ -15,6 +15,23 @@ variable "location" {
   nullable    = false
 }
 
+variable "subnets_and_sizes" {
+  type        = map(number)
+  description = "The size of the subnets"
+  default = {
+    AzureBastionSubnet = 24
+    private_endpoints  = 28
+    virtual_machines   = 24
+  }
+}
+
+variable "tags" {
+  type        = map(string)
+  default     = null
+  description = "A map of tags to add to all resources"
+}
+
+
 variable "name" {
   type        = string
   description = "The name of the this resource."
@@ -23,6 +40,12 @@ variable "name" {
     condition     = can(regex("^[a-z][a-z0-9]{4,14}$", var.name))
     error_message = "The name must be between 5 and 5 chars long and can only contain lowercase letters and numbers." # TODO remove the example below once complete:
   }
+}
+
+variable "domain_name" {
+  type        = string
+  description = "The domain name to use for the private DNS zone."
+  default     = ""
 }
 
 # This is required for most resource modules

@@ -1,18 +1,22 @@
-# TODO: insert locals here.
 # Define resource names
 locals {
-  unique_postfix = random_pet.unique_name.id
+  unique_postfix               = random_pet.unique_name.id
+  domain_name                  = length(var.domain_name) > 0 ? var.domain_name : "az-com-${local.unique_postfix}.internal"
   resource_group_name          = length(var.resource_group_name) > 0 ? var.resource_group_name : "rg-pattern-${local.unique_postfix}"
   log_analytics_workspace_name = "log-analytics-pattern-${local.unique_postfix}"
   virtual_network_name         = "vnet-bridge-${local.unique_postfix}"
   network_security_group_name  = "nsg-bridge-${local.unique_postfix}"
   key_vault_name               = "kv-bridge-${format("%.16s", local.unique_postfix)}"
-  log_analytics_workspace_name = "log-analytics-pattern-${local.unique_postfix}"
-  network_security_group_name  = "nsg-bridge-${local.unique_postfix}"
-  resource_group_name          = "rg-pattern-${local.unique_postfix}"
-  unique_postfix               = random_pet.unique_name.id
-  virtual_network_name         = "vnet-bridge-${local.unique_postfix}"
+  bastion_name                 = "bastion-bridge-${local.unique_postfix}"
+  public_ip_bastion_name       = "pip-bastion-bridge-${local.unique_postfix}"
+  storage_account_name         = replace("-", "", "stgbridge${local.unique_postfix}")
 }
+
+# endpoints for stoage
+locals {
+  storage_endpoints = toset(["blob", "queue", "table", "file"])
+}
+
 # Caluculate the CIDR for the subnets
 locals {
   cidr_subnets    = cidrsubnets(local.virtual_network_address_space, local.subnet_new_bits...)

@@ -49,5 +49,5 @@ module "test" {
   name                = module.naming.storage_account.name_unique
   resource_group_name = azurerm_resource_group.this.name
   enable_telemetry    = var.enable_telemetry
-  depends_on = [ azurerm_resource_group.this ]
+  depends_on          = [azurerm_resource_group.this]
 }
