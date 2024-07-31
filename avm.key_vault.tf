@@ -1,6 +1,16 @@
-resource "azurerm_private_dns_zone" "vaultcore" {
-  name                = "privatelink.vaultcore.azure.net"
+module "private_dns_keyvault" {
+  source              = "Azure/avm-res-network-privatednszone/azurerm"
+  version             = "~> 0.1.1"
+  domain_name         = "privatelink.vaultcore.azure.net"
   resource_group_name = data.azurerm_resource_group.base.name
+  virtual_network_links = {
+    dnslink = {
+      vnetlinkname = "vaultcore-vnet-link"
+      vnetid       = module.virtual_network.resource.id
+    }
+  }
+  tags             = var.tags
+  enable_telemetry = var.enable_telemetry
 }
 
 module "key_vault" {
@@ -16,7 +26,7 @@ module "key_vault" {
   private_endpoints = {
     primary = {
       subnet_resource_id            = module.virtual_network.subnets["private_endpoints"].resource_id
-      private_dns_zone_resource_ids = [azurerm_private_dns_zone.vaultcore.id]
+      private_dns_zone_resource_ids = [module.private_dns_keyvault.resource.id]
       tags                          = var.tags
     }
   }

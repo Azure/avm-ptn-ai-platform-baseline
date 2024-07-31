@@ -31,6 +31,10 @@ resource "random_integer" "region_index" {
 }
 ## End of section to provide a random Azure region for the resource group
 
+resource "random_pet" "name" {
+  length = 1
+}
+
 # This ensures we have unique CAF compliant names for our resources.
 module "naming" {
   source  = "Azure/naming/azurerm"
@@ -46,18 +50,12 @@ resource "azurerm_resource_group" "this" {
 module "test" {
   source              = "../../"
   location            = azurerm_resource_group.this.location
-  name                = module.naming.storage_account.name_unique
+  name                = random_pet.name.id
   resource_group_name = azurerm_resource_group.this.name
   enable_telemetry    = var.enable_telemetry
   tags = {
     environment = "test"
     cicd        = "terraform"
   }
-  subnets_and_sizes = {
-    AzureBastionSubnet = 24
-    private_endpoints  = 26
-    virtual_machines   = 28
-  }
-  address_space_start_ip = "10.2.0.0"
   depends_on             = [azurerm_resource_group.this]
 }

@@ -1,6 +1,16 @@
-resource "azurerm_private_dns_zone" "workspace" {
-  name                = "privatelink.workspace.azure.net"
+module "private_dns_workspace" {
+  source              = "Azure/avm-res-network-privatednszone/azurerm"
+  version             = "~> 0.1.1"
+  domain_name         = "privatelink.workspace.azure.net"
   resource_group_name = data.azurerm_resource_group.base.name
+  virtual_network_links = {
+    dnslink = {
+      vnetlinkname = "workspace-vnet-link"
+      vnetid       = module.virtual_network.resource.id
+    }
+  }
+  tags             = var.tags
+  enable_telemetry = var.enable_telemetry
 }
 
 module "log_analytics_workspace" {
@@ -16,7 +26,7 @@ module "log_analytics_workspace" {
     "pe-log-analytics" = {
       name                          = "pe-log-analytics"
       subnet_resource_id            = module.virtual_network.subnets["private_endpoints"].resource_id
-      private_dns_zone_resource_ids = [azurerm_private_dns_zone.workspace.id]
+      private_dns_zone_resource_ids = [module.private_dns_workspace.resource.id]
       tags                          = var.tags
     }
   }
