@@ -10,7 +10,7 @@ module "key_vault" {
 
   private_endpoints = {
     primary = {
-      private_dns_zone_resource_ids = [module.private_dns_zone_key_vault.resource_id]
+      private_dns_zone_resource_ids = [module.private_dns_zones.resource_id]
       subnet_resource_id            = module.virtual_network.subnets["private_endpoints"].resource_id
       subresource_name              = ["vault"]
       tags                          = var.tags

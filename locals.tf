@@ -9,7 +9,14 @@ locals {
   key_vault_name               = "kv-bridge-${format("%.16s", local.unique_postfix)}"
   bastion_name                 = "bastion-bridge-${local.unique_postfix}"
   public_ip_bastion_name       = "pip-bastion-bridge-${local.unique_postfix}"
-  storage_account_name         = replace("-", "", "stgbridge${local.unique_postfix}")
+  storage_account_name         = "stbridge${random_string.random_id.result}"
+}
+
+resource "random_string" "random_id" {
+  length  = 10
+  special = false
+  numeric = false
+  upper   = false
 }
 
 # endpoints for stoage
@@ -24,11 +31,11 @@ locals {
   subnet_keys     = keys(var.subnets_and_sizes)
   subnet_new_bits = [for size in values(var.subnets_and_sizes) : size - var.address_space_size]
   subnets = { for key, value in var.subnets_and_sizes : key => {
-    name             = key
-    address_prefixes = [local.cidr_subnets[index(local.subnet_keys, key)]]
-    network_security_group = contains(local.skip_nsg, key) ? null : {
-      id = module.network_security_group.resource_id
-    }
+      name             = key
+      address_prefixes = [local.cidr_subnets[index(local.subnet_keys, key)]]
+      network_security_group = contains(local.skip_nsg, key) ? null : {
+        id = module.network_security_group.resource_id
+      }
     }
   }
   virtual_network_address_space = "${var.address_space_start_ip}/${var.address_space_size}"
