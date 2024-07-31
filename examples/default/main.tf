@@ -49,5 +49,15 @@ module "test" {
   name                = module.naming.storage_account.name_unique
   resource_group_name = azurerm_resource_group.this.name
   enable_telemetry    = var.enable_telemetry
+  tags                = {
+    environment = "test"
+    cicd        = "terraform"
+  }
+  subnets_and_sizes = {
+    AzureBastionSubnet = 24
+    private_endpoints  = 26
+    virtual_machines   = 28
+  }
+  address_space_start_ip = "10.2.0.0"
   depends_on          = [azurerm_resource_group.this]
 }

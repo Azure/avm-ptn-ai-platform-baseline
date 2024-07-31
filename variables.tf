@@ -20,7 +20,7 @@ variable "subnets_and_sizes" {
   description = "The size of the subnets"
   default = {
     AzureBastionSubnet = 24
-    private_endpoints  = 28
+    private_endpoints  = 24
     virtual_machines   = 24
   }
 }
@@ -267,3 +267,8 @@ DESCRIPTION
   nullable    = false
 }
 
+variable "suffix" {
+  type        = string
+  description = "A suffix to append to the resource names."
+  default     = ""
+}
