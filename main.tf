@@ -1,10 +1,3 @@
-# TODO: Replace this dummy resource azurerm_resource_group.TODO with your module resource
-resource "random_pet" "unique_name" {
-  length    = 2
-  separator = "-"
-}
-
-# required AVM resources interfaces
 resource "azurerm_management_lock" "this" {
   count = var.lock != null ? 1 : 0
 

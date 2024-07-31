@@ -57,5 +57,5 @@ module "test" {
     environment = "test"
     cicd        = "terraform"
   }
-  depends_on             = [azurerm_resource_group.this]
+  depends_on = [azurerm_resource_group.this]
 }
