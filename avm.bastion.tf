@@ -4,7 +4,7 @@ resource "azurerm_public_ip" "bastion_ip" {
   name                = local.public_ip_bastion_name
   resource_group_name = data.azurerm_resource_group.base.name
   sku                 = "Standard"
-  tags = var.tags
+  tags                = var.tags
 }
 
 module "azure_bastion" {
@@ -17,8 +17,8 @@ module "azure_bastion" {
   location            = data.azurerm_resource_group.base.location
   sku                 = "Standard"
   ip_configuration = {
-    name      = "bastion-ip-config"
-    subnet_id = module.virtual_network.subnets["AzureBastionSubnet"].resource_id
+    name                 = "bastion-ip-config"
+    subnet_id            = module.virtual_network.subnets["AzureBastionSubnet"].resource_id
     public_ip_address_id = azurerm_public_ip.bastion_ip.id
   }
   tags = var.tags

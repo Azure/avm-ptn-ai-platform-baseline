@@ -1,3 +1,8 @@
+resource "azurerm_private_dns_zone" "vaultcore" {
+  name                = "privatelink.vaultcore.azure.net"
+  resource_group_name = data.azurerm_resource_group.base.name
+}
+
 module "key_vault" {
   source  = "Azure/avm-res-keyvault-vault/azurerm"
   version = "~> 0.5"
@@ -10,9 +15,8 @@ module "key_vault" {
 
   private_endpoints = {
     primary = {
-      private_dns_zone_resource_ids = [module.private_dns_zones.resource_id]
       subnet_resource_id            = module.virtual_network.subnets["private_endpoints"].resource_id
-      subresource_name              = ["vault"]
+      private_dns_zone_resource_ids = [azurerm_private_dns_zone.vaultcore.id]
       tags                          = var.tags
     }
   }

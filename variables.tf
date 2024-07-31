@@ -3,35 +3,6 @@ variable "address_space_size" {
   description = "The address space that is used the virtual network"
 }
 
-variable "address_space_start_ip" {
-  type        = string
-  description = "The address space that is used the virtual network"
-  default     = "10.0.0.0"
-}
-
-variable "location" {
-  type        = string
-  description = "Azure region where the resource should be deployed."
-  nullable    = false
-}
-
-variable "subnets_and_sizes" {
-  type        = map(number)
-  description = "The size of the subnets"
-  default = {
-    AzureBastionSubnet = 24
-    private_endpoints  = 24
-    virtual_machines   = 24
-  }
-}
-
-variable "tags" {
-  type        = map(string)
-  default     = null
-  description = "A map of tags to add to all resources"
-}
-
-
 variable "name" {
   type        = string
   description = "The name of the this resource."
@@ -42,26 +13,22 @@ variable "name" {
   }
 }
 
-variable "domain_name" {
-  type        = string
-  description = "The domain name to use for the private DNS zone."
-  default     = ""
-}
-
 # This is required for most resource modules
 variable "resource_group_name" {
   type        = string
   description = "The resource group where the resources will be deployed."
 }
 
-variable "subnets_and_sizes" {
-  type        = map(number)
-  description = "The size of the subnets"
+variable "address_space_size" {
+  type        = number
+  default     = 16
+  description = "The address space that is used the virtual network"
 }
 
-variable "tags" {
-  type        = map(string)
-  description = "A map of tags to add to all resources"
+variable "address_space_start_ip" {
+  type        = string
+  default     = "10.0.0.0"
+  description = "The address space that is used the virtual network"
 }
 
 # required AVM interfaces
@@ -130,6 +97,12 @@ DESCRIPTION
     )
     error_message = "At least one of `workspace_resource_id`, `storage_account_resource_id`, `marketplace_partner_resource_id`, or `event_hub_authorization_rule_resource_id`, must be set."
   }
+}
+
+variable "domain_name" {
+  type        = string
+  default     = ""
+  description = "The domain name to use for the private DNS zone."
 }
 
 variable "enable_telemetry" {
@@ -267,8 +240,24 @@ DESCRIPTION
   nullable    = false
 }
 
+variable "subnets_and_sizes" {
+  type = map(number)
+  default = {
+    AzureBastionSubnet = 24
+    private_endpoints  = 24
+    virtual_machines   = 24
+  }
+  description = "The size of the subnets"
+}
+
 variable "suffix" {
   type        = string
-  description = "A suffix to append to the resource names."
   default     = ""
+  description = "A suffix to append to the resource names."
+}
+
+variable "tags" {
+  type        = map(string)
+  default     = null
+  description = "A map of tags to add to all resources"
 }

@@ -1,3 +1,23 @@
+resource "azurerm_private_dns_zone" "storage_queue" {
+  name                = "privatelink.queue.core.windows.net"
+  resource_group_name = data.azurerm_resource_group.base.name
+}
+
+resource "azurerm_private_dns_zone" "storage_table" {
+  name                = "privatelink.table.core.windows.net"
+  resource_group_name = data.azurerm_resource_group.base.name
+}
+
+resource "azurerm_private_dns_zone" "storage_file" {
+  name                = "privatelink.file.core.windows.net"
+  resource_group_name = data.azurerm_resource_group.base.name
+}
+
+resource "azurerm_private_dns_zone" "storage_blob" {
+  name                = "privatelink.blob.core.windows.net"
+  resource_group_name = data.azurerm_resource_group.base.name
+}
+
 module "storage_account" {
 
   source  = "Azure/avm-res-storage-storageaccount/azurerm"
@@ -13,10 +33,10 @@ module "storage_account" {
   shared_access_key_enabled     = true
   public_network_access_enabled = false
   managed_identities = {
-    system_assigned            = true
+    system_assigned = true
   }
   tags = var.tags
-  
+
   network_rules = {
     bypass                     = ["AzureServices"]
     default_action             = "Deny"
@@ -25,19 +45,45 @@ module "storage_account" {
 
   #create a private endpoint for each endpoint type
   private_endpoints = {
-    for endpoint in local.storage_endpoints :
-    endpoint => {
-      # the name must be set to avoid conflicting resources.
-      name                          = "pe-${endpoint}"
-      subnet_resource_id            = module.virtual_network.subnets["private_endpoints"].resource_id
-      subresource_name              = endpoint
-      private_dns_zone_resource_ids = [module.private_dns_zones.resource_id]
-      # these are optional but illustrate making well-aligned service connection & NIC names.
-      private_service_connection_name = "psc-${endpoint}"
-      network_interface_name          = "nic-pe-${endpoint}"
-      inherit_lock                    = false
-
-      tags = var.tags
+    "blob" = {
+      name                            = "pe-blob"
+      subnet_resource_id              = module.virtual_network.subnets["private_endpoints"].resource_id
+      private_dns_zone_resource_ids   = [azurerm_private_dns_zone.storage_blob.id]
+      subresource_name                = "blob"
+      private_service_connection_name = "psc-blob"
+      network_interface_name          = "nic-pe-blob"
+      inherit_lock                    = true
+      tags                            = var.tags
+    }
+    "queue" = {
+      name                            = "pe-queue"
+      subnet_resource_id              = module.virtual_network.subnets["private_endpoints"].resource_id
+      private_dns_zone_resource_ids   = [azurerm_private_dns_zone.storage_queue.id]
+      subresource_name                = "queue"
+      private_service_connection_name = "psc-queue"
+      network_interface_name          = "nic-pe-queue"
+      inherit_lock                    = true
+      tags                            = var.tags
+    },
+    "table" = {
+      name                            = "pe-table"
+      subnet_resource_id              = module.virtual_network.subnets["private_endpoints"].resource_id
+      private_dns_zone_resource_ids   = [azurerm_private_dns_zone.storage_table.id]
+      subresource_name                = "table"
+      private_service_connection_name = "psc-table"
+      network_interface_name          = "nic-pe-table"
+      inherit_lock                    = true
+      tags                            = var.tags
+    },
+    "file" = {
+      name                            = "pe-file"
+      subnet_resource_id              = module.virtual_network.subnets["private_endpoints"].resource_id
+      private_dns_zone_resource_ids   = [azurerm_private_dns_zone.storage_file.id]
+      subresource_name                = "file"
+      private_service_connection_name = "psc-file"
+      network_interface_name          = "nic-pe-file"
+      inherit_lock                    = true
+      tags                            = var.tags
     }
   }
 }

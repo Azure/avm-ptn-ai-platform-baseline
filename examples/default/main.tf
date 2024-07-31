@@ -49,7 +49,7 @@ module "test" {
   name                = module.naming.storage_account.name_unique
   resource_group_name = azurerm_resource_group.this.name
   enable_telemetry    = var.enable_telemetry
-  tags                = {
+  tags = {
     environment = "test"
     cicd        = "terraform"
   }
@@ -59,5 +59,5 @@ module "test" {
     virtual_machines   = 28
   }
   address_space_start_ip = "10.2.0.0"
-  depends_on          = [azurerm_resource_group.this]
+  depends_on             = [azurerm_resource_group.this]
 }
