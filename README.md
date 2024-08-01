@@ -37,16 +37,14 @@ The following requirements are needed by this module:
 The following resources are used by this module:
 
 - [azurerm_management_lock.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_lock) (resource)
-- [azurerm_private_endpoint.this_managed_dns_zone_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.this_unmanaged_dns_zone_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint_application_security_group_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint_application_security_group_association) (resource)
-- [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
+- [azurerm_public_ip.bastion_ip](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) (resource)
 - [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
-- [modtm_telemetry.telemetry](https://registry.terraform.io/providers/hashicorp/modtm/latest/docs/resources/telemetry) (resource)
-- [random_pet.unique_name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) (resource)
+- [modtm_telemetry.telemetry](https://registry.terraform.io/providers/Azure/modtm/latest/docs/resources/telemetry) (resource)
 - [random_uuid.telemetry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
+- [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 - [azurerm_client_config.telemetry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
-- [modtm_module_source.telemetry](https://registry.terraform.io/providers/hashicorp/modtm/latest/docs/data-sources/module_source) (data source)
+- [azurerm_resource_group.base](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) (data source)
+- [modtm_module_source.telemetry](https://registry.terraform.io/providers/Azure/modtm/latest/docs/data-sources/module_source) (data source)
 
 <!-- markdownlint-disable MD013 -->
 ## Required Inputs
@@ -59,18 +57,6 @@ Description: The address space that is used the virtual network
 
 Type: `number`
 
-### <a name="input_address_space_start_ip"></a> [address\_space\_start\_ip](#input\_address\_space\_start\_ip)
-
-Description: The address space that is used the virtual network
-
-Type: `string`
-
-### <a name="input_location"></a> [location](#input\_location)
-
-Description: Azure region where the resource should be deployed.
-
-Type: `string`
-
 ### <a name="input_name"></a> [name](#input\_name)
 
 Description: The name of the this resource.
@@ -82,12 +68,6 @@ Type: `string`
 Description: The resource group where the resources will be deployed.
 
 Type: `string`
-
-### <a name="input_subnets_and_sizes"></a> [subnets\_and\_sizes](#input\_subnets\_and\_sizes)
-
-Description: The size of the subnets
-
-Type: `map(number)`
 
 ## Optional Inputs
 
@@ -106,30 +86,6 @@ Default:
   "10.1.3.0/24"
 ]
 ```
-
-### <a name="input_customer_managed_key"></a> [customer\_managed\_key](#input\_customer\_managed\_key)
-
-Description: A map describing customer-managed keys to associate with the resource. This includes the following properties:
-- `key_vault_resource_id` - The resource ID of the Key Vault where the key is stored.
-- `key_name` - The name of the key.
-- `key_version` - (Optional) The version of the key. If not specified, the latest version is used.
-- `user_assigned_identity` - (Optional) An object representing a user-assigned identity with the following properties:
-  - `resource_id` - The resource ID of the user-assigned identity.
-
-Type:
-
-```hcl
-object({
-    key_vault_resource_id = string
-    key_name              = string
-    key_version           = optional(string, null)
-    user_assigned_identity = optional(object({
-      resource_id = string
-    }), null)
-  })
-```
-
-Default: `null`
 
 ### <a name="input_enable_telemetry"></a> [enable\_telemetry](#input\_enable\_telemetry)
 
@@ -158,24 +114,6 @@ object({
 ```
 
 Default: `null`
-
-### <a name="input_managed_identities"></a> [managed\_identities](#input\_managed\_identities)
-
-Description: Controls the Managed Identity configuration on this resource. The following properties can be specified:
-
-- `system_assigned` - (Optional) Specifies if the System Assigned Managed Identity should be enabled.
-- `user_assigned_resource_ids` - (Optional) Specifies a list of User Assigned Managed Identity resource IDs to be assigned to this resource.
-
-Type:
-
-```hcl
-object({
-    system_assigned            = optional(bool, false)
-    user_assigned_resource_ids = optional(set(string), [])
-  })
-```
-
-Default: `{}`
 
 ### <a name="input_private_endpoints_subnet_address_spaces"></a> [private\_endpoints\_subnet\_address\_spaces](#input\_private\_endpoints\_subnet\_address\_spaces)
 
@@ -271,25 +209,29 @@ Default:
 
 The following outputs are exported:
 
-### <a name="output_names"></a> [names](#output\_names)
-
-Description: n/a
-
-### <a name="output_private_endpoints"></a> [private\_endpoints](#output\_private\_endpoints)
-
-Description:   A map of the private endpoints created.
-
 ### <a name="output_resource"></a> [resource](#output\_resource)
 
 Description: This is the full output for the resource.
 
-### <a name="output_subnets"></a> [subnets](#output\_subnets)
+### <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id)
 
-Description: n/a
+Description: The Azure resource id of the resource.
 
 ## Modules
 
 The following Modules are called:
+
+### <a name="module_aml"></a> [aml](#module\_aml)
+
+Source: Azure/avm-res-machinelearningservices-workspace/azurerm
+
+Version: 0.1.1
+
+### <a name="module_azure_bastion"></a> [azure\_bastion](#module\_azure\_bastion)
+
+Source: Azure/avm-res-network-bastionhost/azurerm
+
+Version: 0.3.0
 
 ### <a name="module_key_vault"></a> [key\_vault](#module\_key\_vault)
 
@@ -303,17 +245,41 @@ Source: Azure/avm-res-operationalinsights-workspace/azurerm
 
 Version: ~> 0.1
 
+### <a name="module_naming"></a> [naming](#module\_naming)
+
+Source: Azure/naming/azurerm
+
+Version: ~> 0.4.1
+
 ### <a name="module_network_security_group"></a> [network\_security\_group](#module\_network\_security\_group)
 
 Source: Azure/avm-res-network-networksecuritygroup/azurerm
 
 Version: ~> 0.2.0
 
-### <a name="module_private_dns_zone_key_vault"></a> [private\_dns\_zone\_key\_vault](#module\_private\_dns\_zone\_key\_vault)
+### <a name="module_private_dns_keyvault"></a> [private\_dns\_keyvault](#module\_private\_dns\_keyvault)
 
 Source: Azure/avm-res-network-privatednszone/azurerm
 
-Version: ~> 0.1
+Version: ~> 0.1.1
+
+### <a name="module_private_dns_storage"></a> [private\_dns\_storage](#module\_private\_dns\_storage)
+
+Source: Azure/avm-res-network-privatednszone/azurerm
+
+Version: ~> 0.1.1
+
+### <a name="module_private_dns_workspace"></a> [private\_dns\_workspace](#module\_private\_dns\_workspace)
+
+Source: Azure/avm-res-network-privatednszone/azurerm
+
+Version: ~> 0.1.1
+
+### <a name="module_storage_account"></a> [storage\_account](#module\_storage\_account)
+
+Source: Azure/avm-res-storage-storageaccount/azurerm
+
+Version: 0.2.1
 
 ### <a name="module_virtual_network"></a> [virtual\_network](#module\_virtual\_network)
 

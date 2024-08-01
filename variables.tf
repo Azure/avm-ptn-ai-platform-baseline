@@ -1,8 +1,3 @@
-variable "address_space_size" {
-  type        = number
-  description = "The address space that is used the virtual network"
-}
-
 variable "name" {
   type        = string
   description = "The name of the this resource."

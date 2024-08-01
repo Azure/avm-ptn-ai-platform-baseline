@@ -6,6 +6,7 @@ module "naming" {
   prefix  = [var.name]
   suffix  = length(var.suffix) > 0 ? [var.suffix] : []
 }
+
 locals {
   bastion_name                    = module.naming.bastion_host.name_unique
   key_vault_name                  = module.naming.key_vault.name_unique
