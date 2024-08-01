@@ -37,6 +37,10 @@ resource "random_integer" "region_index" {
 }
 ## End of section to provide a random Azure region for the resource group
 
+resource "random_pet" "name" {
+  length = 1
+}
+
 # This ensures we have unique CAF compliant names for our resources.
 module "naming" {
   source  = "Azure/naming/azurerm"
@@ -49,19 +53,17 @@ resource "azurerm_resource_group" "this" {
   name     = module.naming.resource_group.name_unique
 }
 
-# This is the module call
-# Do not specify location here due to the randomization above.
-# Leaving location as `null` will cause the module to use the resource group location
-# with a data source.
 module "test" {
-  source = "../../"
-  # source             = "Azure/avm-<res/ptn>-<name>/azurerm"
-  # ...
+  source              = "../../"
   location            = azurerm_resource_group.this.location
-  name                = "TODO" # TODO update with module.naming.<RESOURCE_TYPE>.name_unique
+  name                = random_pet.name.id
   resource_group_name = azurerm_resource_group.this.name
-
-  enable_telemetry = var.enable_telemetry # see variables.tf
+  enable_telemetry    = var.enable_telemetry
+  tags = {
+    environment = "test"
+    cicd        = "terraform"
+  }
+  depends_on = [azurerm_resource_group.this]
 }
 ```
 
@@ -82,6 +84,7 @@ The following resources are used by this module:
 
 - [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
 - [random_integer.region_index](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) (resource)
+- [random_pet.name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) (resource)
 
 <!-- markdownlint-disable MD013 -->
 ## Required Inputs
