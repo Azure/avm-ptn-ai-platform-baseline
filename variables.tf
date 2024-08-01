@@ -1,7 +1,6 @@
-variable "location" {
-  type        = string
-  description = "Azure region where the resource should be deployed."
-  nullable    = false
+variable "address_space_size" {
+  type        = number
+  description = "The address space that is used the virtual network"
 }
 
 variable "address_space_start_ip" {
@@ -9,21 +8,11 @@ variable "address_space_start_ip" {
   description = "The address space that is used the virtual network"
 }
 
-variable "address_space_size" {
-  type        = number
-  description = "The address space that is used the virtual network"
+variable "location" {
+  type        = string
+  description = "Azure region where the resource should be deployed."
+  nullable    = false
 }
-
-variable "subnets_and_sizes" {
-  type        = map(number)
-  description = "The size of the subnets"
-}
-
-variable "tags" {
-  type        = map(string)
-  description = "A map of tags to add to all resources"
-}
-
 
 variable "name" {
   type        = string
@@ -41,6 +30,16 @@ variable "name" {
 variable "resource_group_name" {
   type        = string
   description = "The resource group where the resources will be deployed."
+}
+
+variable "subnets_and_sizes" {
+  type        = map(number)
+  description = "The size of the subnets"
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to add to all resources"
 }
 
 # required AVM interfaces

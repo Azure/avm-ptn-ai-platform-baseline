@@ -1,4 +1,4 @@
-location = "australiaeast"
+location               = "australiaeast"
 address_space_start_ip = "10.0.0.0"
 address_space_size     = 16
 subnets_and_sizes = {

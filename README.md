@@ -24,19 +24,11 @@ Things to do:
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.5)
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.7)
 
 - <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 3.71)
 
 - <a name="requirement_random"></a> [random](#requirement\_random) (~> 3.5)
-
-## Providers
-
-The following providers are used by this module:
-
-- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 3.71)
-
-- <a name="provider_random"></a> [random](#provider\_random) (~> 3.5)
 
 ## Resources
 
@@ -46,15 +38,30 @@ The following resources are used by this module:
 - [azurerm_private_endpoint.this_managed_dns_zone_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) (resource)
 - [azurerm_private_endpoint.this_unmanaged_dns_zone_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) (resource)
 - [azurerm_private_endpoint_application_security_group_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint_application_security_group_association) (resource)
-- [azurerm_resource_group.TODO](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
-- [azurerm_resource_group_template_deployment.telemetry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group_template_deployment) (resource)
+- [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
 - [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
-- [random_id.telem](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) (resource)
+- [modtm_telemetry.telemetry](https://registry.terraform.io/providers/hashicorp/modtm/latest/docs/resources/telemetry) (resource)
+- [random_pet.unique_name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) (resource)
+- [random_uuid.telemetry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
+- [azurerm_client_config.telemetry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
+- [modtm_module_source.telemetry](https://registry.terraform.io/providers/hashicorp/modtm/latest/docs/data-sources/module_source) (data source)
 
 <!-- markdownlint-disable MD013 -->
 ## Required Inputs
 
 The following input variables are required:
+
+### <a name="input_address_space_size"></a> [address\_space\_size](#input\_address\_space\_size)
+
+Description: The address space that is used the virtual network
+
+Type: `number`
+
+### <a name="input_address_space_start_ip"></a> [address\_space\_start\_ip](#input\_address\_space\_start\_ip)
+
+Description: The address space that is used the virtual network
+
+Type: `string`
 
 ### <a name="input_location"></a> [location](#input\_location)
 
@@ -73,6 +80,12 @@ Type: `string`
 Description: The resource group where the resources will be deployed.
 
 Type: `string`
+
+### <a name="input_subnets_and_sizes"></a> [subnets\_and\_sizes](#input\_subnets\_and\_sizes)
+
+Description: The size of the subnets
+
+Type: `map(number)`
 
 ## Optional Inputs
 
@@ -287,6 +300,10 @@ Default: `null`
 
 The following outputs are exported:
 
+### <a name="output_names"></a> [names](#output\_names)
+
+Description: n/a
+
 ### <a name="output_private_endpoints"></a> [private\_endpoints](#output\_private\_endpoints)
 
 Description:   A map of the private endpoints created.
@@ -295,9 +312,43 @@ Description:   A map of the private endpoints created.
 
 Description: This is the full output for the resource.
 
+### <a name="output_subnets"></a> [subnets](#output\_subnets)
+
+Description: n/a
+
 ## Modules
 
-No modules.
+The following Modules are called:
+
+### <a name="module_key_vault"></a> [key\_vault](#module\_key\_vault)
+
+Source: Azure/avm-res-keyvault-vault/azurerm
+
+Version: ~> 0.5
+
+### <a name="module_log_analytics_workspace"></a> [log\_analytics\_workspace](#module\_log\_analytics\_workspace)
+
+Source: Azure/avm-res-operationalinsights-workspace/azurerm
+
+Version: ~> 0.1
+
+### <a name="module_network_security_group"></a> [network\_security\_group](#module\_network\_security\_group)
+
+Source: Azure/avm-res-network-networksecuritygroup/azurerm
+
+Version: ~> 0.2.0
+
+### <a name="module_private_dns_zone_key_vault"></a> [private\_dns\_zone\_key\_vault](#module\_private\_dns\_zone\_key\_vault)
+
+Source: Azure/avm-res-network-privatednszone/azurerm
+
+Version: ~> 0.1
+
+### <a name="module_virtual_network"></a> [virtual\_network](#module\_virtual\_network)
+
+Source: Azure/avm-res-network-virtualnetwork/azurerm
+
+Version: ~> 0.2.0
 
 <!-- markdownlint-disable-next-line MD041 -->
 ## Data Collection
