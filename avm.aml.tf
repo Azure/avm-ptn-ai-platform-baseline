@@ -9,10 +9,13 @@ module "aml" {
   }
   storage_account = {
     resource_id = module.storage_account.resource.id
+    create_new  = false
   }
   key_vault = {
-    resource_id = module.key_vault.resource_id
+    resource_id = replace(module.key_vault.resource_id, "Microsoft.KeyVault", "Microsoft.Keyvault")
+    create_new  = false
   }
   enable_telemetry = var.enable_telemetry
   tags             = var.tags
+  is_private       = true
 }

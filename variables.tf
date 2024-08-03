@@ -4,7 +4,7 @@ variable "name" {
 
   validation {
     condition     = can(regex("^[a-z][a-z0-9]{4,14}$", var.name))
-    error_message = "The name must be between 5 and 5 chars long and can only contain lowercase letters and numbers."
+    error_message = "The name must be between 5 and 15 chars long and can only contain lowercase letters and numbers."
   }
 }
 
@@ -106,4 +106,9 @@ variable "vnet_address_spaces" {
   type        = list(string)
   default     = ["10.1.0.0/16"]
   description = "The address space that is used the virtual network"
+}
+
+variable "location" {
+  type        = string
+  description = "The location/region where the resources will be deployed."
 }
