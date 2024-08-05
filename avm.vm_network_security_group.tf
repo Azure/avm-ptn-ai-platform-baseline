@@ -1,4 +1,4 @@
-module "network_security_group" {
+module "vm_network_security_group" {
   source              = "Azure/avm-res-network-networksecuritygroup/azurerm"
   version             = "~> 0.2.0"
   resource_group_name = data.azurerm_resource_group.base.name
