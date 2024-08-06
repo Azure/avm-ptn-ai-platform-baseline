@@ -1,24 +1,16 @@
 # Define resource names
 
-module "naming" {
-  source  = "Azure/naming/azurerm"
-  version = "~> 0.4.1"
-  prefix  = [var.name]
-  suffix  = length(var.suffix) > 0 ? [var.suffix] : []
-}
-
 locals {
-  bastion_name                        = module.naming.bastion_host.name_unique
-  bastion_network_security_group_name = "${module.naming.network_security_group.name_unique}-ba"
-  key_vault_name                      = module.naming.key_vault.name_unique
-  log_analytics_workspace_name        = module.naming.log_analytics_workspace.name_unique
-  machine_learning_workspace_name     = module.naming.machine_learning_workspace.name_unique
-  pe_network_security_group_name      = "${module.naming.network_security_group.name_unique}-pe"
-  public_ip_bastion_name              = module.naming.public_ip.name_unique
-  resource_group_name                 = length(var.resource_group_name) > 0 ? var.resource_group_name : module.naming.resource_group.name_unique
-  storage_account_name                = module.naming.storage_account.name_unique
-  virtual_network_name                = module.naming.virtual_network.name_unique
-  vm_network_security_group_name      = "${module.naming.network_security_group.name_unique}-vm"
+  bastion_name                        = replace("ba-${var.name}", "/[^a-zA-Z0-9-]/", "")
+  bastion_network_security_group_name = replace("ba-nsg${var.name}", "/[^a-zA-Z0-9-]/", "")
+  key_vault_name                      = replace("kv${var.name}", "/[^a-zA-Z0-9-]/", "")
+  log_analytics_workspace_name        = replace("la${var.name}", "/[^a-zA-Z0-9-]/", "")
+  machine_learning_workspace_name     = replace("aml${var.name}", "/[^a-zA-Z0-9-]/", "")
+  pe_network_security_group_name      = replace("pe-nsg${var.name}", "/[^a-zA-Z0-9-]/", "")
+  resource_group_name                 = length(var.resource_group_name) > 0 ? var.resource_group_name : replace("rg-${var.name}", "/[^a-zA-Z0-9-]/", "")
+  storage_account_name                = replace("sa${var.name}", "/[^a-zA-Z0-9-]/", "")
+  virtual_network_name                = replace("vnet${var.name}", "/[^a-zA-Z0-9-]/", "")
+  vm_network_security_group_name      = replace("vm-nsg${var.name}", "/[^a-zA-Z0-9-]/", "")
 }
 # Diagnostic settings
 locals {

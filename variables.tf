@@ -1,6 +1,7 @@
 variable "location" {
   type        = string
   description = "The location/region where the resources will be deployed."
+  nullable    = false
 }
 
 variable "name" {
@@ -87,12 +88,6 @@ variable "role_assignments" {
   > Note: only set `skip_service_principal_aad_check` to true if you are assigning a role to a service principal.
   DESCRIPTION
   nullable    = false
-}
-
-variable "suffix" {
-  type        = string
-  default     = ""
-  description = "A suffix to append to the resource names."
 }
 
 variable "tags" {

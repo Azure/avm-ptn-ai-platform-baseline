@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "bastion_ip" {
   allocation_method   = "Static"
   location            = data.azurerm_resource_group.base.location
-  name                = local.public_ip_bastion_name
+  name                = local.bastion_name
   resource_group_name = data.azurerm_resource_group.base.name
   sku                 = "Standard"
   tags                = var.tags

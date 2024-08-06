@@ -26,7 +26,7 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.7)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 3.71)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (3.112)
 
 - <a name="requirement_modtm"></a> [modtm](#requirement\_modtm) (~> 0.3)
 
@@ -36,14 +36,14 @@ The following requirements are needed by this module:
 
 The following resources are used by this module:
 
-- [azurerm_management_lock.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_lock) (resource)
-- [azurerm_public_ip.bastion_ip](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) (resource)
-- [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_management_lock.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.112/docs/resources/management_lock) (resource)
+- [azurerm_public_ip.bastion_ip](https://registry.terraform.io/providers/hashicorp/azurerm/3.112/docs/resources/public_ip) (resource)
+- [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.112/docs/resources/role_assignment) (resource)
 - [modtm_telemetry.telemetry](https://registry.terraform.io/providers/Azure/modtm/latest/docs/resources/telemetry) (resource)
 - [random_uuid.telemetry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
-- [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
-- [azurerm_client_config.telemetry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
-- [azurerm_resource_group.base](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) (data source)
+- [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.112/docs/data-sources/client_config) (data source)
+- [azurerm_client_config.telemetry](https://registry.terraform.io/providers/hashicorp/azurerm/3.112/docs/data-sources/client_config) (data source)
+- [azurerm_resource_group.base](https://registry.terraform.io/providers/hashicorp/azurerm/3.112/docs/data-sources/resource_group) (data source)
 - [modtm_module_source.telemetry](https://registry.terraform.io/providers/Azure/modtm/latest/docs/data-sources/module_source) (data source)
 
 <!-- markdownlint-disable MD013 -->
@@ -161,14 +161,6 @@ map(object({
 
 Default: `{}`
 
-### <a name="input_suffix"></a> [suffix](#input\_suffix)
-
-Description: A suffix to append to the resource names.
-
-Type: `string`
-
-Default: `""`
-
 ### <a name="input_tags"></a> [tags](#input\_tags)
 
 Description: A map of tags to add to all resources
@@ -250,12 +242,6 @@ Version: ~> 0.5
 Source: Azure/avm-res-operationalinsights-workspace/azurerm
 
 Version: ~> 0.1
-
-### <a name="module_naming"></a> [naming](#module\_naming)
-
-Source: Azure/naming/azurerm
-
-Version: ~> 0.4.1
 
 ### <a name="module_pe_network_security_group"></a> [pe\_network\_security\_group](#module\_pe\_network\_security\_group)
 
