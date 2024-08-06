@@ -211,7 +211,7 @@ module "vm_network_security_group" {
       source_address_prefix      = "*"
       source_port_range          = "*"
     }
-    
+
     DenyAllOutbound = {
       access                     = "Deny"
       direction                  = "Outbound"

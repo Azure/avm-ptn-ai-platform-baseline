@@ -51,11 +51,11 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_address_space_size"></a> [address\_space\_size](#input\_address\_space\_size)
+### <a name="input_location"></a> [location](#input\_location)
 
-Description: The address space that is used the virtual network
+Description: The location/region where the resources will be deployed.
 
-Type: `number`
+Type: `string`
 
 ### <a name="input_name"></a> [name](#input\_name)
 
@@ -233,6 +233,12 @@ Source: Azure/avm-res-network-bastionhost/azurerm
 
 Version: 0.3.0
 
+### <a name="module_ba_network_security_group"></a> [ba\_network\_security\_group](#module\_ba\_network\_security\_group)
+
+Source: Azure/avm-res-network-networksecuritygroup/azurerm
+
+Version: ~> 0.2.0
+
 ### <a name="module_key_vault"></a> [key\_vault](#module\_key\_vault)
 
 Source: Azure/avm-res-keyvault-vault/azurerm
@@ -251,7 +257,7 @@ Source: Azure/naming/azurerm
 
 Version: ~> 0.4.1
 
-### <a name="module_network_security_group"></a> [network\_security\_group](#module\_network\_security\_group)
+### <a name="module_pe_network_security_group"></a> [pe\_network\_security\_group](#module\_pe\_network\_security\_group)
 
 Source: Azure/avm-res-network-networksecuritygroup/azurerm
 
@@ -284,6 +290,12 @@ Version: 0.2.1
 ### <a name="module_virtual_network"></a> [virtual\_network](#module\_virtual\_network)
 
 Source: Azure/avm-res-network-virtualnetwork/azurerm
+
+Version: ~> 0.2.0
+
+### <a name="module_vm_network_security_group"></a> [vm\_network\_security\_group](#module\_vm\_network\_security\_group)
+
+Source: Azure/avm-res-network-networksecuritygroup/azurerm
 
 Version: ~> 0.2.0
 
