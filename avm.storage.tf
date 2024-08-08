@@ -22,7 +22,7 @@ module "storage_account" {
   account_replication_type      = "LRS"
   account_tier                  = "Standard"
   account_kind                  = "StorageV2"
-  location                      = data.azurerm_resource_group.base.location
+  location                      = var.location
   name                          = local.storage_account_name
   resource_group_name           = data.azurerm_resource_group.base.name
   min_tls_version               = "TLS1_2"

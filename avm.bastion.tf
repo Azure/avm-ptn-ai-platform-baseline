@@ -1,6 +1,6 @@
 resource "azurerm_public_ip" "bastion_ip" {
   allocation_method   = "Static"
-  location            = data.azurerm_resource_group.base.location
+  location            = var.location
   name                = local.bastion_name
   resource_group_name = data.azurerm_resource_group.base.name
   sku                 = "Standard"
@@ -14,7 +14,7 @@ module "azure_bastion" {
   enable_telemetry    = var.enable_telemetry
   name                = local.bastion_name
   resource_group_name = data.azurerm_resource_group.base.name
-  location            = data.azurerm_resource_group.base.location
+  location            = var.location
   sku                 = "Standard"
   ip_configuration = {
     name                 = "bastion-ip-config"

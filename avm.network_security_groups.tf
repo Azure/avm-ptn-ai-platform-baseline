@@ -3,7 +3,7 @@ module "ba_network_security_group" {
   version             = "~> 0.2.0"
   resource_group_name = data.azurerm_resource_group.base.name
   name                = local.bastion_network_security_group_name
-  location            = data.azurerm_resource_group.base.location
+  location            = var.location
 
   security_rules = {
 
@@ -144,7 +144,7 @@ module "pe_network_security_group" {
   version             = "~> 0.2.0"
   resource_group_name = data.azurerm_resource_group.base.name
   name                = local.pe_network_security_group_name
-  location            = data.azurerm_resource_group.base.location
+  location            = var.location
 
   security_rules = {
     no_internet = {
@@ -174,7 +174,7 @@ module "vm_network_security_group" {
   version             = "~> 0.2.0"
   resource_group_name = data.azurerm_resource_group.base.name
   name                = local.vm_network_security_group_name
-  location            = data.azurerm_resource_group.base.location
+  location            = var.location
 
   security_rules = {
     AllowAzureBastion = {

@@ -3,6 +3,7 @@
 locals {
   bastion_name                        = replace("ba-${var.name}", "/[^a-zA-Z0-9-]/", "")
   bastion_network_security_group_name = replace("ba-nsg${var.name}", "/[^a-zA-Z0-9-]/", "")
+  container_registry_name             = replace("acr${var.name}", "/[^a-zA-Z0-9-]/", "")
   key_vault_name                      = replace("kv${var.name}", "/[^a-zA-Z0-9-]/", "")
   log_analytics_workspace_name        = replace("la${var.name}", "/[^a-zA-Z0-9-]/", "")
   machine_learning_workspace_name     = replace("aml${var.name}", "/[^a-zA-Z0-9-]/", "")

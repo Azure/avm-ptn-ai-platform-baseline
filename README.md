@@ -219,6 +219,12 @@ Source: Azure/avm-res-machinelearningservices-workspace/azurerm
 
 Version: 0.1.1
 
+### <a name="module_avm_res_containerregistry_registry"></a> [avm\_res\_containerregistry\_registry](#module\_avm\_res\_containerregistry\_registry)
+
+Source: Azure/avm-res-containerregistry-registry/azurerm
+
+Version: ~> 0.2
+
 ### <a name="module_azure_bastion"></a> [azure\_bastion](#module\_azure\_bastion)
 
 Source: Azure/avm-res-network-bastionhost/azurerm
@@ -248,6 +254,12 @@ Version: ~> 0.1
 Source: Azure/avm-res-network-networksecuritygroup/azurerm
 
 Version: ~> 0.2.0
+
+### <a name="module_private_dns_container_registry"></a> [private\_dns\_container\_registry](#module\_private\_dns\_container\_registry)
+
+Source: Azure/avm-res-network-privatednszone/azurerm
+
+Version: ~> 0.1.1
 
 ### <a name="module_private_dns_keyvault"></a> [private\_dns\_keyvault](#module\_private\_dns\_keyvault)
 

@@ -18,7 +18,7 @@ module "key_vault" {
   version = "~> 0.5"
 
   name                          = local.key_vault_name
-  location                      = data.azurerm_resource_group.base.location
+  location                      = var.location
   resource_group_name           = data.azurerm_resource_group.base.name
   tenant_id                     = data.azurerm_client_config.current.tenant_id
   public_network_access_enabled = false
