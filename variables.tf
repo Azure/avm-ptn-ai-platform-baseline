@@ -26,6 +26,24 @@ variable "azure_bastion_subnet_address_spaces" {
   description = "The address space that is used for the Azure Bastion subnet"
 }
 
+variable "bastion_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Azure Bastion resource. if not provided, a name will be generated."
+}
+
+variable "bastion_network_security_group_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Network Security Group for the Azure Bastion subnet. If not provided, a name will be generated."
+}
+
+variable "container_registry_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Azure Container Registry. If not provided, a name will be generated."
+}
+
 variable "enable_telemetry" {
   type        = bool
   default     = true
@@ -34,6 +52,12 @@ This variable controls whether or not telemetry is enabled for the module.
 For more information see <https://aka.ms/avm/telemetryinfo>.
 If it is set to false, then no telemetry will be collected.
 DESCRIPTION
+}
+
+variable "key_vault_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Azure Key Vault. If not provided, a name will be generated."
 }
 
 variable "lock" {
@@ -53,6 +77,24 @@ DESCRIPTION
     condition     = var.lock != null ? contains(["CanNotDelete", "ReadOnly"], var.lock.kind) : true
     error_message = "The lock level must be one of: 'None', 'CanNotDelete', or 'ReadOnly'."
   }
+}
+
+variable "log_analytics_workspace_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Log Analytics Workspace. If not provided, a name will be generated."
+}
+
+variable "machine_learning_workspace_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Azure Machine Learning Workspace. If not provided, a name will be generated."
+}
+
+variable "pe_network_security_group_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Network Security Group for the private endpoints subnet. If not provided, a name will be generated."
 }
 
 variable "private_endpoints_subnet_address_spaces" {
@@ -90,6 +132,12 @@ variable "role_assignments" {
   nullable    = false
 }
 
+variable "storage_account_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Azure Storage Account. If not provided, a name will be generated."
+}
+
 variable "tags" {
   type        = map(string)
   default     = null
@@ -100,6 +148,18 @@ variable "virtual_machines_subnet_address_spaces" {
   type        = list(string)
   default     = ["10.1.1.0/24"]
   description = "The address space that is used for the virtual machines subnet"
+}
+
+variable "virtual_network_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Virtual Network. If not provided, a name will be generated."
+}
+
+variable "vm_network_security_group_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Network Security Group for the virtual machines subnet. If not provided, a name will be generated."
 }
 
 variable "vnet_address_spaces" {

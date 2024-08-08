@@ -87,6 +87,30 @@ Default:
 ]
 ```
 
+### <a name="input_bastion_name"></a> [bastion\_name](#input\_bastion\_name)
+
+Description: The name of the Azure Bastion resource. if not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_bastion_network_security_group_name"></a> [bastion\_network\_security\_group\_name](#input\_bastion\_network\_security\_group\_name)
+
+Description: The name of the Network Security Group for the Azure Bastion subnet. If not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_container_registry_name"></a> [container\_registry\_name](#input\_container\_registry\_name)
+
+Description: The name of the Azure Container Registry. If not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
+
 ### <a name="input_enable_telemetry"></a> [enable\_telemetry](#input\_enable\_telemetry)
 
 Description: This variable controls whether or not telemetry is enabled for the module.  
@@ -96,6 +120,14 @@ If it is set to false, then no telemetry will be collected.
 Type: `bool`
 
 Default: `true`
+
+### <a name="input_key_vault_name"></a> [key\_vault\_name](#input\_key\_vault\_name)
+
+Description: The name of the Azure Key Vault. If not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
 
 ### <a name="input_lock"></a> [lock](#input\_lock)
 
@@ -114,6 +146,30 @@ object({
 ```
 
 Default: `null`
+
+### <a name="input_log_analytics_workspace_name"></a> [log\_analytics\_workspace\_name](#input\_log\_analytics\_workspace\_name)
+
+Description: The name of the Log Analytics Workspace. If not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_machine_learning_workspace_name"></a> [machine\_learning\_workspace\_name](#input\_machine\_learning\_workspace\_name)
+
+Description: The name of the Azure Machine Learning Workspace. If not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_pe_network_security_group_name"></a> [pe\_network\_security\_group\_name](#input\_pe\_network\_security\_group\_name)
+
+Description: The name of the Network Security Group for the private endpoints subnet. If not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
 
 ### <a name="input_private_endpoints_subnet_address_spaces"></a> [private\_endpoints\_subnet\_address\_spaces](#input\_private\_endpoints\_subnet\_address\_spaces)
 
@@ -161,6 +217,14 @@ map(object({
 
 Default: `{}`
 
+### <a name="input_storage_account_name"></a> [storage\_account\_name](#input\_storage\_account\_name)
+
+Description: The name of the Azure Storage Account. If not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
+
 ### <a name="input_tags"></a> [tags](#input\_tags)
 
 Description: A map of tags to add to all resources
@@ -182,6 +246,22 @@ Default:
   "10.1.1.0/24"
 ]
 ```
+
+### <a name="input_virtual_network_name"></a> [virtual\_network\_name](#input\_virtual\_network\_name)
+
+Description: The name of the Virtual Network. If not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_vm_network_security_group_name"></a> [vm\_network\_security\_group\_name](#input\_vm\_network\_security\_group\_name)
+
+Description: The name of the Network Security Group for the virtual machines subnet. If not provided, a name will be generated.
+
+Type: `string`
+
+Default: `""`
 
 ### <a name="input_vnet_address_spaces"></a> [vnet\_address\_spaces](#input\_vnet\_address\_spaces)
 
