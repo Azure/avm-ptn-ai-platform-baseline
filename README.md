@@ -121,6 +121,41 @@ Type: `bool`
 
 Default: `true`
 
+### <a name="input_jumpbox"></a> [jumpbox](#input\_jumpbox)
+
+Description: This creates a jumpbox if configured with jumpbox.create = true and defaults to a Windows machine.
+
+Type:
+
+```hcl
+object({
+    create  = bool
+    name    = optional(string, "jumpbox")
+    os_type = optional(string, "Windows")
+    size    = optional(string, "Standard_D2s_v3")
+    zone    = optional(string, "1")
+    image_ref = optional(object({
+      publisher = string
+      offer     = string
+      sku       = string
+      version   = string
+      }), {
+      publisher = "microsoftwindowsdesktop"
+      offer     = "windows-11"
+      sku       = "win11-22h2-ent"
+      version   = "latest"
+    })
+  })
+```
+
+Default:
+
+```json
+{
+  "create": false
+}
+```
+
 ### <a name="input_key_vault_name"></a> [key\_vault\_name](#input\_key\_vault\_name)
 
 Description: The name of the Azure Key Vault. If not provided, a name will be generated.
@@ -316,6 +351,12 @@ Version: 0.3.0
 Source: Azure/avm-res-network-networksecuritygroup/azurerm
 
 Version: ~> 0.2.0
+
+### <a name="module_jumpbox"></a> [jumpbox](#module\_jumpbox)
+
+Source: Azure/avm-res-compute-virtualmachine/azurerm
+
+Version: 0.15.1
 
 ### <a name="module_key_vault"></a> [key\_vault](#module\_key\_vault)
 

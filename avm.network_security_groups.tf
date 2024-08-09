@@ -182,21 +182,10 @@ module "vm_network_security_group" {
       direction                  = "Inbound"
       name                       = "Allow-AzureBastion"
       priority                   = 100
-      protocol                   = "Tcp"
-      destination_address_prefix = "Internet"
+      protocol                   = "*"
+      destination_address_prefix = "VirtualNetwork"
       destination_port_ranges    = ["3389", "22"]
       source_address_prefix      = "VirtualNetwork"
-      source_port_range          = "*"
-    }
-    DenyAllInbound = {
-      access                     = "Deny"
-      direction                  = "Inbound"
-      name                       = "Deny-All-Inbound"
-      priority                   = 4096
-      protocol                   = "*"
-      destination_address_prefix = "*"
-      destination_port_range     = "*"
-      source_address_prefix      = "*"
       source_port_range          = "*"
     }
 
@@ -207,18 +196,6 @@ module "vm_network_security_group" {
       priority                   = 100
       protocol                   = "*"
       destination_address_prefix = "Internet"
-      destination_port_range     = "*"
-      source_address_prefix      = "*"
-      source_port_range          = "*"
-    }
-
-    DenyAllOutbound = {
-      access                     = "Deny"
-      direction                  = "Outbound"
-      name                       = "Deny-Internet-Outbound"
-      priority                   = 4096
-      protocol                   = "*"
-      destination_address_prefix = "*"
       destination_port_range     = "*"
       source_address_prefix      = "*"
       source_port_range          = "*"

@@ -42,8 +42,10 @@ resource "random_integer" "region_index" {
 }
 ## End of section to provide a random Azure region for the resource group
 
-resource "random_pet" "name" {
-  length = 1
+resource "random_string" "name" {
+  length  = 5
+  special = false
+  upper   = false
 }
 
 # This ensures we have unique CAF compliant names for our resources.
@@ -61,9 +63,12 @@ resource "azurerm_resource_group" "this" {
 module "test" {
   source              = "../../"
   location            = azurerm_resource_group.this.location
-  name                = random_pet.name.id
+  name                = random_string.name.id
   resource_group_name = azurerm_resource_group.this.name
   enable_telemetry    = var.enable_telemetry
+  jumpbox = {
+    create = true
+  }
   tags = {
     environment = "test"
     cicd        = "terraform"
@@ -89,7 +94,7 @@ The following resources are used by this module:
 
 - [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.112/docs/resources/resource_group) (resource)
 - [random_integer.region_index](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) (resource)
-- [random_pet.name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) (resource)
+- [random_string.name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) (resource)
 
 <!-- markdownlint-disable MD013 -->
 ## Required Inputs

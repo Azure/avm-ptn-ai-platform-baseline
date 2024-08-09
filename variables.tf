@@ -54,6 +54,31 @@ If it is set to false, then no telemetry will be collected.
 DESCRIPTION
 }
 
+variable "jumpbox" {
+  type = object({
+    create  = bool
+    name    = optional(string, "jumpbox")
+    os_type = optional(string, "Windows")
+    size    = optional(string, "Standard_D2s_v3")
+    zone    = optional(string, "1")
+    image_ref = optional(object({
+      publisher = string
+      offer     = string
+      sku       = string
+      version   = string
+      }), {
+      publisher = "microsoftwindowsdesktop"
+      offer     = "windows-11"
+      sku       = "win11-22h2-ent"
+      version   = "latest"
+    })
+  })
+  default = {
+    create = false
+  }
+  description = "This creates a jumpbox if configured with jumpbox.create = true and defaults to a Windows machine."
+}
+
 variable "key_vault_name" {
   type        = string
   default     = ""
